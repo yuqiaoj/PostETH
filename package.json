@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.11.2"
+  },
+  "scripts": {
+    "deploy": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy-goerli": "npx hardhat run scripts/deploy.js --network goerli"
+  },
+  "dependencies": {
+    "@thirdweb-dev/react": "^3.0.2",
+    "@thirdweb-dev/sdk": "^3.0.2",
+    "ethers": "^5.7.1"
+  }
+}
