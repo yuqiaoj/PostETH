@@ -9,8 +9,10 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   IconButton,
+  Link,
   Paper,
   TextField,
   Toolbar,
@@ -18,7 +20,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import darkScrollbar from "@mui/material/darkScrollbar";
-import { Edit, Close, GitHub } from "@mui/icons-material";
+import { Edit, Close, GitHub, Info } from "@mui/icons-material";
 
 const web3 = new Web3("ws://localhost:8545");
 const boardContract = new web3.eth.Contract(contractAbi, contractAddress);
@@ -26,6 +28,7 @@ const boardContract = new web3.eth.Contract(contractAbi, contractAddress);
 function App() {
   const [board, setBoard] = useState([]);
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [value, setValue] = useState("");
 
   const getNotes = async () => {
@@ -37,6 +40,10 @@ function App() {
   const handleClose = () => {
     setOpen(false);
     setValue("");
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
   };
 
   const handlePost = async () => {
@@ -80,10 +87,10 @@ function App() {
                 onClick={() => setOpen(true)}
                 endIcon={<Edit />}
               >
-                New Note
+                New Post
               </Button>
               <IconButton
-                href="https://github.com/"
+                href="https://github.com/yuqiaoj/PostETH"
                 target="_blank"
                 sx={{
                   borderRadius: "10px",
@@ -92,6 +99,15 @@ function App() {
                 }}
               >
                 <GitHub sx={{ color: "primary.light" }} />
+              </IconButton>
+              <IconButton
+                onClick={() => setOpen2(true)}
+                sx={{
+                  borderRadius: "10px",
+                  border: "2px solid rgb(19, 47, 76);",
+                }}
+              >
+                <Info sx={{ color: "primary.light" }} />
               </IconButton>
             </Box>
           </Box>
@@ -117,7 +133,7 @@ function App() {
             ))}
       </Box>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-        <DialogTitle sx={{ m: 0, p: 2 }}>
+        <DialogTitle>
           New Post
           <IconButton
             aria-label="close"
@@ -150,6 +166,47 @@ function App() {
             Post
           </Button>
         </DialogActions>
+      </Dialog>
+      <Dialog open={open2} onClose={handleClose2}>
+        <DialogTitle>
+          About
+          <IconButton
+            aria-label="close"
+            onClick={handleClose2}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText align="center">My first DApp</DialogContentText>
+          <DialogContentText align="center">
+            Built for Hack the North 2022 using React, Hardhat, and MUI
+          </DialogContentText>
+          <DialogContentText align="center">
+            Special thanks to{" "}
+            <Link
+              color="primary.light"
+              href="https://arjundureja.com/"
+              target="_blank"
+            >
+              Arjun Dureja
+            </Link>{" "}
+            and{" "}
+            <Link
+              color="primary.light"
+              href="https://www.linkedin.com/in/vtimbaliuc/"
+              target="_blank"
+            >
+              Slava Timbaliuc
+            </Link>
+          </DialogContentText>
+        </DialogContent>
       </Dialog>
     </ThemeProvider>
   );
